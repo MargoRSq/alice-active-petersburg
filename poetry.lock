@@ -1,0 +1,17 @@
+[[package]]
+name = "yandex-maps"
+version = "0.7"
+description = "Yandex.Maps API python wrapper with optional django integration."
+category = "main"
+optional = false
+python-versions = "*"
+
+[metadata]
+lock-version = "1.1"
+python-versions = "^3.9.5"
+content-hash = "4cb3d60d8c5de7e8d403c9812c1725b287d6784786e4ae439791dd89e0a21399"
+
+[metadata.files]
+yandex-maps = [
+    {file = "yandex-maps-0.7.tar.gz", hash = "sha256:0bc07355b4b6910a5532818b9920365599c050a321c6e4ef9537bba0afafab50"},
+]

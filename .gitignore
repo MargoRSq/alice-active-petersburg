@@ -1,0 +1,11 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+# VS code cache
+.vscode/
+
+# Local env files
+.env
+
+# misc
+.DS_Store
