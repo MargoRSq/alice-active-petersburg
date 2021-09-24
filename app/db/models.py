@@ -15,8 +15,7 @@ class Routes(Base):
     id = Column(Integer, primary_key=True)
     route_type = Column(Enum(RouteType))
     distance = Column(Float)
-    tags_place = Column(String(1000))
-    tags_route = Column(String(1000))
+    tags = Column(String(100))
     fact = Column(String(100))
     url = Column(String(1000))
 

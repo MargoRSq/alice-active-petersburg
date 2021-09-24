@@ -3,6 +3,7 @@ from fastapi import FastAPI, Depends
 from typing import List
 
 from app.db.schemas import Route
+from app.db.operations import check_route
 
 app = FastAPI(title='active-petersburg', version='1.0.0')
 
