@@ -3,10 +3,10 @@ from typing import Optional
 from fastapi import FastAPI
 from pydantic import BaseModel
 
-from db.models import RouteType
+from app.db.models import RouteType
 
 class Route(BaseModel):
-    id: int
+    type: RouteType
     distance: float
     fact: str
     url: str
