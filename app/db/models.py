@@ -13,6 +13,7 @@ class Routes(Base):
     __tablename__ = 'routes_table'
 
     id = Column(Integer, primary_key=True)
+    name = Column(String(100))
     route_type = Column(Enum(RouteType))
     distance = Column(Float)
     tags = Column(String(100))

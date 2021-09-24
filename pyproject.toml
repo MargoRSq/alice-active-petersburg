@@ -8,9 +8,10 @@ authors = ["Margo <slava1kvartovkin@gmail.com>"]
 python = "3.9.5"
 fastapi = "^0.68.1"
 SQLAlchemy = "^1.4.23"
-pymorphy2 = "^0.9.1"
 uvicorn = "^0.15.0"
 psycopg2-binary = "^2.9.1"
+pydantic = "^1.8.2"
+requests = "^2.26.0"
 
 [tool.poetry.dev-dependencies]
 
