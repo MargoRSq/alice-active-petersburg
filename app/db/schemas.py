@@ -10,3 +10,6 @@ class Route(BaseModel):
     distance: float
     fact: str
     url: str
+
+class Weather(BaseModel):
+    data: str
