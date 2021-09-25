@@ -5,6 +5,7 @@ from typing import List
 from app.db.schemas import Route, Weather
 from app.db.models import RouteType
 from app.utils.weather import get_weather
+# from app.utils.gsheets_parser import parse_table
 
 app = FastAPI(title='active-petersburg', version='1.0.0')
 
