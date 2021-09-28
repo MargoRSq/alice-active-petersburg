@@ -24,11 +24,11 @@ async def fetch_weather():
     return {"data": get_weather()}
 
 @app.get('/elevation_image/{db_id}')
-async def fetch_image(db_id: int):
-    try:
-        route = get_atr_Routes(atrs=[Routes.route_id, Routes.elevation_array, Routes.distance], id=db_id)
-        image_bytes = build_plot(distance=route['distance'], elevation=route['elevation_array'])
-        return Response(content=image_bytes.getvalue(), media_type="image/png")
-    except BaseException:
-        raise HTTPException(status_code=404, detail="route not found")
+async def fetch_image(db_id: int, mn: int):
+    # try:
+    route = get_atr_Routes(atrs=[Routes.route_id, Routes.elevation_array, Routes.distance], id=db_id)
+    image_bytes = build_plot(mn=mn, distance=route['distance'], elevation=route['elevation_array'])
+    return Response(content=image_bytes.getvalue(), media_type="image/png")
+    # except BaseException:
+    #     raise HTTPException(status_code=404, detail="route not found")
     
