@@ -1,4 +1,3 @@
-
 from app.db.models import RouteType
 from app.db.operations import get_routes
 

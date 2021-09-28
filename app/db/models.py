@@ -19,5 +19,9 @@ class Routes(Base):
     tags = Column(String(100))
     fact = Column(String(100))
     url = Column(String(1000))
+    route_id = Column(String(50))
+    elevation_array = Column(String(10000))
+    elevation_result = Column(Integer)
+
 
 Base.metadata.create_all(engine)

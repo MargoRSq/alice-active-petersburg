@@ -1,4 +1,5 @@
 import requests
+import math
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -14,8 +15,16 @@ def get_elevation(route_id: str):
 
 
 def build_plot(distance: float, elevation: list[int]):
-    dist = np.arange(0.0, distance, distance/len(elevation))
-    elevation = np.array(elevation)
+    elevation_list = list(map(int, elevation[1:-1].split(',')))
+
+    rounded = round(distance, 2)
+    if distance - rounded < 0.5:
+        distance = math.ceil(distance)
+    else:
+        distance = int(distance)
+    step = distance/len(elevation_list)
+    dist = np.arange(0.0, distance, step)
+    elevation = np.array(elevation_list)
 
     fig, ax = plt.subplots()
     ax.plot(dist, elevation, color='purple')
