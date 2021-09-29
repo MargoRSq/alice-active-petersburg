@@ -1,4 +1,4 @@
-from sqlalchemy import select, insert, delete
+from sqlalchemy import select, insert, delete, update
 
 from app.db.models import Routes, RouteType
 from app.db.db import Base, engine, session
@@ -28,18 +28,26 @@ def get_routes(route_type: RouteType, distance: float):
         result = conn.execute(select_state)
     return [dict(route)for route in result.fetchall()]
 
-def post_routes(name, route_type, distance, tags, fact, url, route_id_gaio):
+def post_routes(name, route_type, 
+                distance, tags, 
+                fact, url, 
+                route_id_gaio):
     elevation_array = get_elevation(route_id_gaio)
     elevation_result = elevation_array[0] - elevation_array[-1]
     if not check_route(url):
         insert_state = (
-            insert(Routes).
+            insert(Routes).returning(Routes.id).
             values(name=name ,route_type=route_type, 
                    distance=distance, tags=tags, fact=fact, url=url,
                    elevation_array=elevation_array, elevation_result=elevation_result,
                    route_id=route_id_gaio))
         with engine.connect() as conn:
-            conn.execute(insert_state)
+            result = conn.execute(insert_state)
+            id = result.fetchone()[0]
+            stmt = (update(Routes).
+            values(elevation_image=f"https://alice-active-petersburg.herokuapp.com/elevation_image/{id}").\
+            where(Routes.id == id))
+            conn.execute(stmt)
 
 gaio_id = '34250d75-844c-4b45-ae76-872459ac9ad0'
 url = 'https://yandex.ru/maps/213/moscow/?ll=37.622285%2C55.750077&mode=routes&rtext=55.730826%2C37.598034~55.738865%2C37.610737~55.756104%2C37.604904&rtt=pd&ruri=~~&z=10'

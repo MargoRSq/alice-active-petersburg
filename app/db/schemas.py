@@ -10,6 +10,7 @@ class Route(BaseModel):
     fact: str
     url: str
     elevation_result: int
+    elevation_image: str
 
 class Weather(BaseModel):
     data: str
