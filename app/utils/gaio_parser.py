@@ -53,35 +53,20 @@ def build_plot(distance: float, elevation: list[int], mn: int):
     
     return result_image
 
-from time import time
-from pprint import pprint
-
-start = time()
-
-
-# pprint(json)
-
-# print(time() - start)
-
 def get_route_info(route_id: str):
     route_info = {}
     
     route_json = get_gaia_route_json(route_id)
     route = route_json['features']
     properties = route[0]['properties']
-
-    coordinates = route[0]['geometry']['coordinates'][0]
-    coordinates_array = [(coordinates[i][0], coordinates[i][1])
-                         for i in range(len(coordinates))]
+    points = {point['properties']['order']: point['properties'] for point in route[1:]}
     
     route_info['gaia_id'] = route_id
-    route_info['points'] = [{'long': coordinates_array[i][0], 'lat': coordinates_array[i][1]}
-                         for i in range(len(coordinates_array))]
+    route_info['points'] = [{'long': points[i]['longitude'], 'lat': points[i]['latitude']}
+                         for i in range(len(points))]
     route_info['name'] = properties['title']
     route_info['distance'] = round((properties['distance'] / 1000), 2)
     route_info['elevation_array'] = [point['properties']['elevation'] for point in route[1:]]
     route_info['elevation_result'] = route_info['elevation_array'][0] - route_info['elevation_array'][-1]
 
     return route_info
-
-# pprint(get_route_info(json))

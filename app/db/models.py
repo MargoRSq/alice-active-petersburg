@@ -19,11 +19,12 @@ class Routes(Base):
     distance = Column(Float)
     tags = Column(String(100))
     fact = Column(String(100))
+    ym_url = Column(String(10000))
     gaia_id = Column(String(50))
     elevation_array = Column(String(10000))
     elevation_result = Column(Integer)
     elevation_image = Column(String(100))
-    route_image = Column(String(100))
+    route_image = Column(String(10000))
 
 
 Base.metadata.create_all(engine)
