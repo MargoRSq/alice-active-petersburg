@@ -2,11 +2,11 @@ from sqlalchemy import select, insert, delete, update
 
 from db.models import Routes, RouteType
 from db.db import Base, engine, session
-from utils.gaio_parser import get_elevation, get_route_info
+from utils.gaio_parser import get_route_info
 
 
-def check_route(url: str):
-    q = session.query(Routes).filter(Routes.url == url)
+def check_route(gaia_id: str):
+    q = session.query(Routes).filter(Routes.gaia_id == gaia_id)
     return session.query(q.exists()).scalar()
 
 def get_atr_Routes(atrs, id: int):
@@ -28,24 +28,24 @@ def get_routes(route_type: RouteType, distance: float):
         result = conn.execute(select_state)
     return [dict(route)for route in result.fetchall()]
 
-def insert_routes(name, route_type, 
-                distance, tags, 
-                fact, url, 
-                route_id_gaio):
-    elevation_array = get_elevation(route_id_gaio)
-    elevation_result = elevation_array[0] - elevation_array[-1]
-    if not check_route(url):
+def insert_route(name, route_type,
+                distance, tags,
+                fact, gaia_id,
+                elevation_array, elevation_result,
+                *args, **kwargs):
+    if not check_route(gaia_id):
         insert_state = (
             insert(Routes).returning(Routes.id).
             values(name=name ,route_type=route_type, 
-                   distance=distance, tags=tags, fact=fact, url=url,
-                   elevation_array=elevation_array, elevation_result=elevation_result,
-                   route_id=route_id_gaio))
+                   distance=distance, tags=tags, fact=fact, gaia_id=gaia_id,
+                   elevation_array=elevation_array, elevation_result=elevation_result))
         with engine.connect() as conn:
             result = conn.execute(insert_state)
             id = result.fetchone()[0]
+            ym_queries = ''
             stmt = (update(Routes).
-            values(elevation_image=f"https://alice-active-petersburg.herokuapp.com/elevation_image/{id}").\
+            values(elevation_image=f"https://alice-active-petersburg.herokuapp.com/elevation_image/{id}",
+                   route_image=f"https://static-maps.yandex.ru/1.x/?l=map{ym_queries}").\
             where(Routes.id == id))
             conn.execute(stmt)
 
@@ -61,6 +61,9 @@ def insert_routes(name, route_type,
 def post_one_route(route_type: RouteType, tags: str, fact: str, gaia_route_id: str):
     gaia_info = get_route_info(gaia_route_id)
 
+    insert_route(**gaia_info, route_type=route_type, tags=tags, fact=fact)
+
+post_one_route('running', 'площадь,парк', 'факт', '7607387d-5fef-40eb-b92f-9480d29d65d0')
 
 
 

@@ -57,15 +57,16 @@ from time import time
 from pprint import pprint
 
 start = time()
-json = get_gaia_route_json('34250d75-844c-4b45-ae76-872459ac9ad0')
+
 
 # pprint(json)
 
 # print(time() - start)
 
-def get_route_info(route_json: dict):
+def get_route_info(route_id: str):
     route_info = {}
     
+    route_json = get_gaia_route_json(route_id)
     route = route_json['features']
     properties = route[0]['properties']
 
@@ -73,6 +74,7 @@ def get_route_info(route_json: dict):
     coordinates_array = [(coordinates[i][0], coordinates[i][1])
                          for i in range(len(coordinates))]
     
+    route_info['gaia_id'] = route_id
     route_info['points'] = [{'long': coordinates_array[i][0], 'lat': coordinates_array[i][1]}
                          for i in range(len(coordinates_array))]
     route_info['name'] = properties['title']
