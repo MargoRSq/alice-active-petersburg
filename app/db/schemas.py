@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from app.db.models import RouteType
+from db.models import RouteType
 
 class Route(BaseModel):
     id: int

@@ -6,12 +6,17 @@ import numpy as np
 
 from PIL import Image
 from io import BytesIO
+from functools import lru_cache
+
+@lru_cache(maxsize=100)
+def get_gaia_route_json(route_id: str):
+    url = f'https://www.gaiagps.com/api/objects/track/{route_id}/'
+    return requests.get(url).json()
 
 
 def get_elevation(route_id: str):
-    url = f'https://www.gaiagps.com/api/objects/track/{route_id}/'
-    resp_json = requests.get(url).json()
-    return [point['properties']['elevation'] for point in resp_json['features'][1:]]
+    return [point['properties']['elevation'] 
+            for point in get_gaia_route_json(route_id)['features'][1:]]
 
 
 def build_plot(distance: float, elevation: list[int], mn: int):
@@ -33,11 +38,9 @@ def build_plot(distance: float, elevation: list[int], mn: int):
         title='График перепада высот')
     ax.grid()
 
-
-
     plot_file = BytesIO()
     px = 1/plt.rcParams['figure.dpi']
-    fig.set_size_inches(382*mn*px, 172*mn*px)
+    fig.set_size_inches(382*round(mn)*px, 172*round(mn)*px)
     fig.savefig(plot_file)
 
     im1 = Image.open(plot_file)
@@ -49,3 +52,34 @@ def build_plot(distance: float, elevation: list[int], mn: int):
     im1.save(result_image, format='PNG')
     
     return result_image
+
+from time import time
+from pprint import pprint
+
+start = time()
+json = get_gaia_route_json('34250d75-844c-4b45-ae76-872459ac9ad0')
+
+# pprint(json)
+
+# print(time() - start)
+
+def get_route_info(route_json: dict):
+    route_info = {}
+    
+    route = route_json['features']
+    properties = route[0]['properties']
+
+    coordinates = route[0]['geometry']['coordinates'][0]
+    coordinates_array = [(coordinates[i][0], coordinates[i][1])
+                         for i in range(len(coordinates))]
+    
+    route_info['points'] = [{'long': coordinates_array[i][0], 'lat': coordinates_array[i][1]}
+                         for i in range(len(coordinates_array))]
+    route_info['name'] = properties['title']
+    route_info['distance'] = round((properties['distance'] / 1000), 2)
+    route_info['elevation_array'] = [point['properties']['elevation'] for point in route[1:]]
+    route_info['elevation_result'] = route_info['elevation_array'][0] - route_info['elevation_array'][-1]
+
+    return route_info
+
+# pprint(get_route_info(json))

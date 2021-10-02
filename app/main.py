@@ -2,12 +2,12 @@ from fastapi import FastAPI, Depends, HTTPException
 from fastapi.responses import Response
 from typing import List
 
-from app.db.schemas import Route, Weather
-from app.db.models import RouteType, Routes
-from app.db.operations import get_atr_Routes
-from app.utils.weather import get_weather
-from app.utils.sorter import filter_routes
-from app.utils.gaio_parser import build_plot
+from db.schemas import Route, Weather
+from db.models import RouteType, Routes
+from db.operations import get_atr_Routes
+from utils.weather import get_weather
+from utils.sorter import filter_routes
+from utils.gaio_parser import build_plot
 
 
 app = FastAPI(title='active-petersburg', version='1.0.0')

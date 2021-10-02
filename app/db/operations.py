@@ -1,8 +1,8 @@
 from sqlalchemy import select, insert, delete, update
 
-from app.db.models import Routes, RouteType
-from app.db.db import Base, engine, session
-from app.utils.gaio_parser import get_elevation
+from db.models import Routes, RouteType
+from db.db import Base, engine, session
+from utils.gaio_parser import get_elevation, get_route_info
 
 
 def check_route(url: str):
@@ -28,7 +28,7 @@ def get_routes(route_type: RouteType, distance: float):
         result = conn.execute(select_state)
     return [dict(route)for route in result.fetchall()]
 
-def post_routes(name, route_type, 
+def insert_routes(name, route_type, 
                 distance, tags, 
                 fact, url, 
                 route_id_gaio):
@@ -49,10 +49,20 @@ def post_routes(name, route_type,
             where(Routes.id == id))
             conn.execute(stmt)
 
-gaio_id = '34250d75-844c-4b45-ae76-872459ac9ad0'
-url = 'https://yandex.ru/maps/213/moscow/?ll=37.622285%2C55.750077&mode=routes&rtext=55.730826%2C37.598034~55.738865%2C37.610737~55.756104%2C37.604904&rtt=pd&ruri=~~&z=10'
-post_routes('hello','running', 3.9, 'адмиралтийский,набережная,парк', 'рофлофакт', url+'1', route_id_gaio=gaio_id)
-post_routes('hello','wheel', 3.9, 'адмиралтийский,набережная,парк', 'рофлофакт', url+'2', route_id_gaio=gaio_id)
-post_routes('hello','wheel', 4.5, 'парк,победа', 'рофлофакт', url+'3', route_id_gaio=gaio_id)
-post_routes('hello','running', 3.9, 'адмиралтийский', 'рофлофакт', url+'7', route_id_gaio=gaio_id)
-post_routes('hello','running', 3.9, 'адмиралтийский,набережная,парк,набережная,адмиралтийский,адмиралтийский', 'рофлофакт', url+'6', route_id_gaio=gaio_id)
+
+# gaio_id = '34250d75-844c-4b45-ae76-872459ac9ad0'
+# url = 'https://yandex.ru/maps/213/moscow/?ll=37.622285%2C55.750077&mode=routes&rtext=55.730826%2C37.598034~55.738865%2C37.610737~55.756104%2C37.604904&rtt=pd&ruri=~~&z=10'
+# post_routes('hello','running', 3.9, 'адмиралтийский,набережная,парк', 'рофлофакт', url+'1', route_id_gaio=gaio_id)
+# post_routes('hello','wheel', 3.9, 'адмиралтийский,набережная,парк', 'рофлофакт', url+'2', route_id_gaio=gaio_id)
+# post_routes('hello','wheel', 4.5, 'парк,победа', 'рофлофакт', url+'3', route_id_gaio=gaio_id)
+# post_routes('hello','running', 3.9, 'адмиралтийский', 'рофлофакт', url+'7', route_id_gaio=gaio_id)
+# post_routes('hello','running', 3.9, 'адмиралтийский,набережная,парк,набережная,адмиралтийский,адмиралтийский', 'рофлофакт', url+'6', route_id_gaio=gaio_id)
+
+def post_one_route(route_type: RouteType, tags: str, fact: str, gaia_route_id: str):
+    gaia_info = get_route_info(gaia_route_id)
+
+
+
+
+
+
