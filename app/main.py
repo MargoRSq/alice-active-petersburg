@@ -16,7 +16,7 @@ async def routes_parameters(distance: float, tags: str, type: RouteType = RouteT
     return {"type": type, "distance": distance, "tags": tags}
 
 async def posting_parameters(tags: str, fact: str, gaia_id: str,
-                             type: RouteType = RouteType.pedestrian.value,):
+                             type: RouteType = RouteType.pedestrian.value):
     return {"type": type, "gaia_id": gaia_id, "tags": tags, "fact": fact} 
 
 
@@ -39,9 +39,9 @@ async def fetch_image(db_id: int, mn: int):
 
 @app.get('/post_route')
 def post_route(commons: dict = Depends(posting_parameters)):
-    try:
-        post_one_route(commons['type'], commons['tags'], commons['fact'], commons['gaia_id'])
-        return {"data": "Маршрут добавлен в базу данных"}
-    except BaseException:
-        return {"data": "Что-то пошло не так"}
+    # try:
+    post_one_route(commons['type'], commons['tags'], commons['fact'], commons['gaia_id'])
+    return {"data": "Маршрут добавлен в базу данных"}
+    # except BaseException:
+    # return {"data": "Что-то пошло не так"}
 

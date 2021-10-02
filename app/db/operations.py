@@ -70,7 +70,7 @@ def post_one_route(route_type: RouteType, tags: str, fact: str, gaia_route_id: s
                  tags=tags, fact=fact, ym_queries=ym_queries, ym_url=ym_url)
 
 
-post_one_route('running', 'площадь,парк', 'факт', '34250d75-844c-4b45-ae76-872459ac9ad0')
+
 
 
 
