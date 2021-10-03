@@ -1,5 +1,3 @@
-import uvicorn
-
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.responses import Response
 from typing import List
@@ -9,7 +7,7 @@ from app.db.models import RouteType, Routes
 from app.db.operations import get_atr_Routes, post_one_route
 from app.utils.weather import get_weather
 from app.utils.sorter import filter_routes
-from app.utils.gaio_parser import build_plot, get_route_info
+from app.utils.gaio_parser import build_plot
 
 
 app = FastAPI(title='active-petersburg', version='1.0.0')
@@ -19,7 +17,7 @@ async def routes_parameters(distance: float, tags: str, type: RouteType = RouteT
 
 async def posting_parameters(tags: str, fact: str, gaia_id: str,
                              type: RouteType = RouteType.pedestrian.value):
-    return {"type": type, "gaia_id": gaia_id, "tags": tags, "fact": fact} 
+    return {"type": type, "gaia_id": gaia_id, "tags": tags, "fact": fact}
 
 
 @app.get('/routes', response_model=List[Route])

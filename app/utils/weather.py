@@ -2,9 +2,9 @@ import requests
 
 from app.utils.config import YW_TOKEN
 
+
 headers = {'X-Yandex-API-Key': YW_TOKEN}
 url = 'https://api.weather.yandex.ru/v2/forecast?lat=59.9311&lon=30.3609&lang=ru&limit=1'
-
 
 windy_cond = 'На улице сейчас сильный ветерок, дважды подумай о том, что надеть!' #ветренно
 cold_cond = 'В Петербурге сейчас холодновато, одевайся потеплее!' #холодно

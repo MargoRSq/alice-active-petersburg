@@ -8,6 +8,7 @@ from PIL import Image
 from io import BytesIO
 from functools import lru_cache
 
+
 @lru_cache(maxsize=100)
 def get_gaia_route_json(route_id: str):
     url = f'https://www.gaiagps.com/api/objects/track/{route_id}/'
@@ -15,7 +16,7 @@ def get_gaia_route_json(route_id: str):
 
 
 def get_elevation(route_id: str):
-    return [point['properties']['elevation'] 
+    return [point['properties']['elevation']
             for point in get_gaia_route_json(route_id)['features'][1:]]
 
 
@@ -50,7 +51,7 @@ def build_plot(distance: float, elevation: list[int], mn: int):
 
     result_image = BytesIO()
     im1.save(result_image, format='PNG')
-    
+
     return result_image
 
 def get_route_info(route_id: str):

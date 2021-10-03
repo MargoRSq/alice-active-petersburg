@@ -19,23 +19,14 @@ def queries_image_creator(coordinates: list):
     start_lat = coordinates[0]['lat']
     result_query += f'&pt={start_long},{start_lat},ya_ru'
 
-    # middle_points = coordinates[1:-1]
-
-    # for point in middle_points:
-    #     long = point['long']
-    #     lat = point['lat']
-        # result_query += f"~{long},{lat},pm2blywm2"
-
     end_long = coordinates[-1]['long']
     end_lat = coordinates[-1]['lat']
     result_query += f"~{end_long},{end_lat},flag"
-   
+
     result_query += "&pl="
     for point in coordinates:
         long = point['long']
         lat = point['lat']
         result_query += f"{long},{lat},"
-    
+
     return result_query
-
-

@@ -1,4 +1,3 @@
-from sqlalchemy import text
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 from sqlalchemy import MetaData
@@ -11,5 +10,4 @@ Base = declarative_base()
 metadata_obj = MetaData()
 
 Session = sessionmaker(bind=engine)
-
 session = Session()
