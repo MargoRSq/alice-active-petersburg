@@ -1,9 +1,9 @@
 from sqlalchemy import select, insert, delete, update
 
-from db.models import Routes, RouteType
-from db.db import Base, engine, session
-from utils.gaio_parser import get_route_info
-from utils.ymaps import queries_image_creator, queris_map_creator
+from app.db.models import Routes, RouteType
+from app.db.db import Base, engine, session
+from app.utils.gaio_parser import get_route_info
+from app.utils.ymaps import queries_image_creator, queris_map_creator
 
 
 def check_route(gaia_id: str):

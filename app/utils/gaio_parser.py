@@ -62,7 +62,6 @@ def get_route_info(route_id: str):
     points = {point['properties']['order']: point['properties'] for point in route[1:]}
     points = {k: v for k, v in sorted(points.items(), key=lambda item: item[0])}
 
-    
     route_info['gaia_id'] = route_id
     route_info['points'] = [{'long': point[1]['longitude'], 'lat': point[1]['latitude']}
                          for point in list(points.items())]

@@ -1,5 +1,5 @@
-from db.models import RouteType
-from db.operations import get_routes
+from app.db.models import RouteType
+from app.db.operations import get_routes
 
 
 def tags_sort(tags, routes):

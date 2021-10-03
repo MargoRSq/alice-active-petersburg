@@ -1,13 +1,15 @@
+import uvicorn
+
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.responses import Response
 from typing import List
 
-from db.schemas import Route, Weather
-from db.models import RouteType, Routes
-from db.operations import get_atr_Routes, post_one_route
-from utils.weather import get_weather
-from utils.sorter import filter_routes
-from utils.gaio_parser import build_plot, get_route_info
+from app.db.schemas import Route, Weather
+from app.db.models import RouteType, Routes
+from app.db.operations import get_atr_Routes, post_one_route
+from app.utils.weather import get_weather
+from app.utils.sorter import filter_routes
+from app.utils.gaio_parser import build_plot, get_route_info
 
 
 app = FastAPI(title='active-petersburg', version='1.0.0')
@@ -39,9 +41,8 @@ async def fetch_image(db_id: int, mn: int):
 
 @app.get('/post_route')
 def post_route(commons: dict = Depends(posting_parameters)):
-    # try:
-    post_one_route(commons['type'], commons['tags'], commons['fact'], commons['gaia_id'])
-    return {"data": "Маршрут добавлен в базу данных"}
-    # except BaseException:
-    # return {"data": "Что-то пошло не так"}
-
+    try:
+        post_one_route(commons['type'], commons['tags'], commons['fact'], commons['gaia_id'])
+        return {"data": "Маршрут добавлен в базу данных"}
+    except BaseException as e:
+        return {"data": e}

@@ -2,7 +2,7 @@ import enum
 
 from sqlalchemy import Column, Integer, String, Enum,  Float
 
-from db.db import engine, Base
+from app.db.db import engine, Base
 
 
 class RouteType(enum.Enum):
