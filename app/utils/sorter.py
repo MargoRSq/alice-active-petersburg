@@ -23,9 +23,10 @@ def filter_routes(distance: float, tags: str,
                   route_type: RouteType = RouteType.running.value) -> list[dict]:
 
     routes = get_routes(route_type=route_type, distance=distance)
+    random.shuffle(routes)
     tags_list = list(filter(lambda x: len(x) > 0, tags.split(',')))
     if tags_list[0] == 'биба':
-        random.shuffle(routes)
+        return routes
     else:
         routes = tags_sort(tags_list, routes)
     return routes

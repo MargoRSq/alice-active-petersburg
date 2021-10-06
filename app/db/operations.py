@@ -23,7 +23,7 @@ def get_atr_Routes(atrs, id: int):
 def get_routes(route_type: RouteType, distance: float):
     select_state = (
         select(Routes).
-        where(Routes.route_type == route_type, Routes.distance <= distance)
+        where(Routes.route_type == route_type, Routes.distance <= distance + 5, Routes.distance >= distance - 5)
     )
     with engine.connect() as conn:
         result = conn.execute(select_state)
