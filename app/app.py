@@ -39,8 +39,8 @@ async def fetch_image(db_id: int, mn: int):
 
 @app.get('/post_route')
 def post_route(commons: dict = Depends(posting_parameters)):
-    try:
-        post_one_route(commons['type'], commons['tags'], commons['fact'], commons['gaia_id'])
-        return {"data": "Маршрут добавлен в базу данных"}
-    except BaseException as e:
-        return {"data": e}
+    # try:
+    post_one_route(commons['type'], commons['tags'], commons['fact'], commons['gaia_id'])
+    return {"data": "Маршрут добавлен в базу данных"}
+    # except BaseException as e:
+    #     return {"error": e}

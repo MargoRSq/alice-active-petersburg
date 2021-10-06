@@ -56,7 +56,7 @@ def post_one_route(route_type: RouteType, tags: str, fact: str, gaia_route_id: s
     gaia_info = get_route_info(gaia_route_id)
     ym_queries = queries_image_creator(gaia_info['points'])
 
-    ym_url = 'https://yandex.ru/maps/?'+ queris_map_creator(gaia_info['points'])
+    ym_url = 'https://yandex.ru/maps/?'+ queris_map_creator(gaia_info['points'], route_type)
 
     insert_route(**gaia_info, route_type=route_type,
                  tags=tags, fact=fact, ym_queries=ym_queries, ym_url=ym_url)

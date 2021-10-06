@@ -1,13 +1,19 @@
+from app.db.models import RouteType
 
-def queris_map_creator(coordinates: list):
+def queris_map_creator(coordinates: list, route_type: RouteType) -> str:
     result_query = 'rtext='
     start_long = coordinates[0]['long']
     start_lat = coordinates[0]['lat']
-    result_query += f"{start_lat}%2C{start_long}"
+    result_query += f"{start_lat},{start_long}"
     for point in coordinates[1:]:
         long = point['long']
         lat = point['lat']
-        result_query += f"~{lat}%2C{long}"
+        result_query += f"~{lat},{long}"
+
+    if route_type == RouteType.pedestrian or route_type == RouteType.running:
+        result_query+="&rtt=pd"
+    elif route_type == RouteType.wheel:
+        result_query+="&rtt=bc"
 
     return result_query
 
