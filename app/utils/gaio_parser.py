@@ -45,7 +45,7 @@ def build_plot(distance: float, elevation: list[int], mn: int):
     fig.savefig(plot_file)
 
     im1 = Image.open(plot_file)
-    im2 = Image.open('img/orig.png').resize((28*mn, 28*mn))
+    im2 = Image.open('app/img/orig.png').resize((28*mn, 28*mn))
 
     im1.paste(im2, (4*mn, 4*mn))
 
