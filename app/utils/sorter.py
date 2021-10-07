@@ -21,7 +21,6 @@ def tags_sort(tags, routes):
 
 def filter_routes(distance: float, tags: str,
                   route_type: RouteType = RouteType.running.value) -> list[dict]:
-
     routes = get_routes(route_type=route_type, distance=distance)
     random.shuffle(routes)
     tags_list = list(filter(lambda x: len(x) > 0, tags.split(',')))

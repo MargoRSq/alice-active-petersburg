@@ -21,10 +21,16 @@ def get_atr_Routes(atrs, id: int):
 
 
 def get_routes(route_type: RouteType, distance: float):
-    select_state = (
-        select(Routes).
-        where(Routes.route_type == route_type, Routes.distance <= distance + 5, Routes.distance >= distance - 5)
-    )
+    if distance > 0:
+        select_state = (
+            select(Routes).
+            where(Routes.route_type == route_type, Routes.distance <= distance + 5, Routes.distance >= distance - 5)
+        )
+    else:
+        select_state = (
+            select(Routes).
+            where(Routes.route_type == route_type, Routes.distance < 200)
+        )
     with engine.connect() as conn:
         result = conn.execute(select_state)
     return [dict(route)for route in result.fetchall()]
