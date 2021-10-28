@@ -5,7 +5,7 @@ description = ""
 authors = ["Margo <slava1kvartovkin@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "3.9.5"
+python = "3.9.6"
 fastapi = "^0.68.1"
 SQLAlchemy = "^1.4.23"
 uvicorn = "^0.15.0"
@@ -18,6 +18,9 @@ matplotlib = "^3.4.3"
 numpy = "^1.21.2"
 
 [tool.poetry.dev-dependencies]
+
+[tool.poetry.scripts]
+run = "main:start"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
