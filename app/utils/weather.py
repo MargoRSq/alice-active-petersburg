@@ -1,6 +1,5 @@
 import requests
 
-
 url = 'https://wttr.in/stpetersburg?format=j1'
 
 windy_cond = 'На улице сейчас сильный ветерок, дважды подумайте о том, что вы наденете!' #ветренно
@@ -12,16 +11,11 @@ perfect_cond = 'На улице сейчас идеальная погода д�
 
 def get_weather():
     r = requests.get(url)
-    from pprint import pprint
-    pprint(r.json())
     json_fact = r.json()['current_condition']
-    condition = json_fact['condition']
-    feels_like = json_fact['FeelsLikeC']
-    wind_speed = json_fact['wind_speed']
+    feels_like = int(json_fact[0]['FeelsLikeC'])
+    wind_speed = float(json_fact[0]['windspeedKmph'])
 
-    if 'rain' in condition:
-        return rain_cond
-    elif feels_like < 8:
+    if feels_like < 8:
         return cold_cond
     elif feels_like >= 23:
         return hot_cond
