@@ -19,9 +19,6 @@ numpy = "^1.21.2"
 
 [tool.poetry.dev-dependencies]
 
-[tool.poetry.scripts]
-run = "main:start"
-
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
