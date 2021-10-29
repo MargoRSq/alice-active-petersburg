@@ -2,13 +2,13 @@ import requests
 
 from app.db.operations import post_one_route
 
-def parse_sheet(url: str):
+def parse_sheet(url):
     response = requests.get(url)
     json = response.json()
 
     return json
 
-def post_routes_from_json(json: dict):
+def post_routes_from_json(json):
     for route in json:
         post_one_route(route_type=route['type'],
                        tags=route['tags'],
