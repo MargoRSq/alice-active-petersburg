@@ -56,8 +56,7 @@ def insert_route(name, route_type,
             id = result.fetchone()[0]
             route_img = f"https://static-maps.yandex.ru/1.x/?l=map{ym_queries}"[:-1]
             stmt = (update(Routes).
-            values(elevation_image=f"{argv[2]}/elevation_image/{id}",
-                   route_image=route_img).\
+            values(route_image=route_img).\
             where(Routes.id == id))
             conn.execute(stmt)
 
