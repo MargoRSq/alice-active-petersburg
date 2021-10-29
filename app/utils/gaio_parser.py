@@ -20,7 +20,7 @@ def get_elevation(route_id: str):
             for point in get_gaia_route_json(route_id)['features'][1:]]
 
 
-def build_plot(distance: float, elevation: list[int], mn: int):
+def build_plot(distance: float, elevation, mn: int):
     plt.rcParams.update({'font.size': 4 if mn == 1 else math.log(600**mn, 7)})
     elevation_list = list(map(int, elevation[1:-1].split(',')))
 
@@ -45,7 +45,7 @@ def build_plot(distance: float, elevation: list[int], mn: int):
     fig.savefig(plot_file)
 
     im1 = Image.open(plot_file)
-    im2 = Image.open('img/orig.png').resize((28*mn, 28*mn))
+    im2 = Image.open('app/img/orig.png').resize((28*mn, 28*mn))
 
     im1.paste(im2, (4*mn, 4*mn))
 
