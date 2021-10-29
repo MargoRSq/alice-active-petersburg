@@ -11,7 +11,6 @@ class Route(BaseModel):
     ym_url: str
     route_image: str
     elevation_result: int
-    elevation_image: str
 
 
 class Weather(BaseModel):
