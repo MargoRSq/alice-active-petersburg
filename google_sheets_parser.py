@@ -1,5 +1,7 @@
 import requests
 
+from sys import argv
+
 from app.db.operations import post_one_route
 
 def parse_sheet(url):
@@ -16,5 +18,5 @@ def post_routes_from_json(json):
                        gaia_route_id=route['route_id'])
 
 
-routes_json = parse_sheet('https://opensheet.vercel.app/1Rh9Pzc5lRjQKLddSoVz01ku9jfVdCNpxGkoq3IhZZC4/Sheet1')
+routes_json = parse_sheet(argv[1])
 post_routes_from_json(routes_json)

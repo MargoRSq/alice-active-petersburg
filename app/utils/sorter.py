@@ -24,7 +24,7 @@ def filter_routes(distance: float, tags: str,
     routes = get_routes(route_type=route_type, distance=distance)
     random.shuffle(routes)
     tags_list = list(filter(lambda x: len(x) > 0, tags.split(',')))
-    if tags_list[0] == 'биба' and tags_list[1] == 'биба':
+    if tags_list[0] == 'биба' or tags_list[1] == 'биба':
         return routes
     else:
         routes = tags_sort(tags_list, routes)

@@ -5,6 +5,7 @@ from app.db.models import Routes, RouteType
 from app.db.db import engine, session
 from app.utils.gaio_parser import get_route_info
 from app.utils.ymaps import queries_image_creator, queris_map_creator
+from app.utils.config import HOST, PORT
 
 
 def check_route(gaia_id: str):
@@ -35,8 +36,9 @@ def get_routes(route_type: RouteType, distance: float):
     with engine.connect() as conn:
         result = conn.execute(select_state)
         routes = [dict(route)for route in result.fetchall()]
-        for route in routes:
-            route['distance'] = round(route['distance'], 1)
+    for route in routes:
+        route['elevation_image'] = f"{HOST}:{PORT}/elevation_image/{route['id']}?mn=2"
+        route['distance'] = round(route['distance'], 1)
     return routes
 
 def insert_route(name, route_type,

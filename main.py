@@ -1,8 +1,7 @@
 import uvicorn
 
-from sys import argv
-
 from app.utils.config import HOST
+from app.utils.config import PORT
 
 if __name__ == '__main__':
-    uvicorn.run("app.app:app", host=HOST, port=3000, reload=True)
+    uvicorn.run("app.app:app", host=HOST, port=PORT, reload=True)
