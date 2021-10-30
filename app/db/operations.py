@@ -37,7 +37,7 @@ def get_routes(route_type: RouteType, distance: float):
         result = conn.execute(select_state)
         routes = [dict(route)for route in result.fetchall()]
     for route in routes:
-        route['elevation_image'] = f"{HOST}:{PORT}/elevation_image/{route['id']}?mn=2"
+        route['elevation_image'] = f"https://{HOST}:{PORT}/elevation_image/{route['id']}?mn=2"
         route['distance'] = round(route['distance'], 1)
     return routes
 
