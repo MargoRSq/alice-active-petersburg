@@ -10,9 +10,9 @@ def queris_map_creator(coordinates: list, route_type: RouteType) -> str:
         lat = point['lat']
         result_query += f"~{lat},{long}"
 
-    if route_type == RouteType.pedestrian or route_type == RouteType.running:
+    if route_type == RouteType.pedestrian.value or route_type == RouteType.running.value:
         result_query+="&rtt=pd"
-    elif route_type == RouteType.wheel:
+    elif route_type == RouteType.wheel.value:
         result_query+="&rtt=bc"
 
     return result_query
