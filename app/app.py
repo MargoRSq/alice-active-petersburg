@@ -2,12 +2,14 @@ from fastapi import FastAPI, Depends, HTTPException
 from fastapi.responses import Response
 from typing import List
 
+from app.utils.config import ROUTES_URL
 from app.db.schemas import Route, Weather
 from app.db.models import RouteType, Routes
 from app.db.operations import get_atr_Routes, post_one_route
 from app.utils.weather import get_weather
 from app.utils.sorter import filter_routes
 from app.utils.gaio_parser import build_plot
+from app.utils.google_sheets_parser import parse_sheet, post_routes_from_json
 
 
 app = FastAPI(title='active-petersburg', version='1.0.0')
@@ -23,6 +25,15 @@ async def posting_parameters(tags: str, fact: str, gaia_id: str,
 @app.get('/routes', response_model=List[Route])
 async def fetch_routes(commons: dict = Depends(routes_parameters)):
     return filter_routes(commons['distance'], commons['tags'], commons['type'])
+
+@app.get('/loadroutes')
+async def fetch_routes():
+    try:
+        routes_json = parse_sheet(ROUTES_URL)
+        post_routes_from_json(routes_json)
+        return {"data": "Done"}
+    except BaseException as e:
+        return HTTPException(500, e)
 
 @app.get('/weather', response_model=Weather)
 async def fetch_weather():
