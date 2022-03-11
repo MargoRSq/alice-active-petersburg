@@ -23,7 +23,6 @@ class Routes(Base):
     gaia_id = Column(String(100))
     elevation_array = Column(String(10000))
     elevation_result = Column(Integer)
-    elevation_image = Column(String(100))
     route_image = Column(String(10000))
 
 

@@ -5,6 +5,7 @@ from app.db.models import Routes, RouteType
 from app.db.db import engine, session
 from app.utils.gaio_parser import get_route_info
 from app.utils.ymaps import queries_image_creator, queris_map_creator
+from app.utils.config import HOST, PORT
 
 
 def check_route(gaia_id: str):
@@ -35,8 +36,9 @@ def get_routes(route_type: RouteType, distance: float):
     with engine.connect() as conn:
         result = conn.execute(select_state)
         routes = [dict(route)for route in result.fetchall()]
-        for route in routes:
-            route['distance'] = round(route['distance'], 1)
+    for route in routes:
+        route['elevation_image'] = f"https://{HOST}:{PORT}/elevation_image/{route['id']}?mn=2"
+        route['distance'] = round(route['distance'], 1)
     return routes
 
 def insert_route(name, route_type,
@@ -56,8 +58,7 @@ def insert_route(name, route_type,
             id = result.fetchone()[0]
             route_img = f"https://static-maps.yandex.ru/1.x/?l=map{ym_queries}"[:-1]
             stmt = (update(Routes).
-            values(elevation_image=f"{argv[2]}/elevation_image/{id}",
-                   route_image=route_img).\
+            values(route_image=route_img).\
             where(Routes.id == id))
             conn.execute(stmt)
 

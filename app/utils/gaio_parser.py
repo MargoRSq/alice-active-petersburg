@@ -32,6 +32,7 @@ def build_plot(distance: float, elevation, mn: int):
     step = distance/len(elevation_list)
     dist = np.arange(0.0, distance, step)
     elevation = np.array(elevation_list)
+    np.array()
 
     fig, ax = plt.subplots()
     ax.plot(dist, elevation, color='purple')
