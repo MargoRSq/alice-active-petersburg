@@ -18,5 +18,3 @@ def post_routes_from_json(json):
                        gaia_route_id=route['route_id'])
 
 
-routes_json = parse_sheet(argv[1])
-post_routes_from_json(routes_json)
